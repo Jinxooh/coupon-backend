@@ -3,7 +3,6 @@ import bodyParser from 'body-parser';
 // routes
 import saleList from './routes/saleList';
 import sendMMS from './routes/sendMMS';
-import crypto from './helper/crypto';
 
 const app = express();
 // const job = schedule.scheduleJob('*/10 * * * * *', () => console.log('schedule on'));
@@ -14,8 +13,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true,
 }));
-
-console.log(crypto('01012345678'));
 
 app.use('/saleList', saleList);
 app.use('/sendMMS', sendMMS);

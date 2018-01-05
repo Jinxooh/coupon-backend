@@ -64,7 +64,8 @@ router.get('/', async (req, res) => {
       if (error) console.log(error);
       connection.query(`INSERT INTO gd_goods_link SET 
       goodsno='${result.insertId}',
-      category='001'
+      category='001',
+      sort=-unix_timestamp()-${result.insertId}
       `, (error, result, fields) => {
         if (error) console.log(error);
         console.log(result);
