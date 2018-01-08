@@ -1,5 +1,5 @@
 const MDCODE = process.env.MD_CODE;
-const tr_id = 'STD_';
+const tr_id = 'STD_COUPON_';
 
 const salelist2 = {
   MDCODE,

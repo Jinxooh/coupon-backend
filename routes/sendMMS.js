@@ -24,14 +24,12 @@ router.get('/', async (req, res) => {
     try {
       rsp = await api.callAPI('reqeust.asp', dataType.request(message, title, callback, goods_id, ctn));
     } catch (err) {
-      return res.status(500).send('somethin broke!');
+      return res.status(500).send({ message: 'something broke' });
     }
     console.log('rsp', rsp);
   } else {
     throw console.log('phone number is wrong err code : ', code);
   }
-
-  
 });
 
 export default router;

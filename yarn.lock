@@ -6,6 +6,12 @@
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@types/geojson/-/geojson-1.0.6.tgz#3e02972728c69248c2af08d60a48cbb8680fffdf"
 
+"@types/mysql@^2.15.0":
+  version "2.15.2"
+  resolved "https://registry.yarnpkg.com/@types/mysql/-/mysql-2.15.2.tgz#45e1e036beb05437bba8f60ec4a94a731f2fa905"
+  dependencies:
+    "@types/node" "*"
+
 "@types/node@*":
   version "8.5.2"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.5.2.tgz#83b8103fa9a2c2e83d78f701a9aa7c9539739aa5"
@@ -361,7 +367,7 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bluebird@^3.4.6:
+bluebird@^3.4.6, bluebird@^3.5.0:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
 
@@ -1774,7 +1780,7 @@ mute-stream@0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.7.tgz#3075ce93bc21b8fab43e1bc4da7e8115ed1e7bab"
 
-mysql@^2.15.0:
+mysql@^2.14.1, mysql@^2.15.0:
   version "2.15.0"
   resolved "https://registry.yarnpkg.com/mysql/-/mysql-2.15.0.tgz#ea16841156343e8f2e47fc8985ec41cdd9573b5c"
   dependencies:
@@ -2096,6 +2102,14 @@ process-nextick-args@~1.0.6:
 progress@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.0.tgz#8a1be366bf8fc23db2bd23f10c6fe920b4389d1f"
+
+promise-mysql@^3.1.5:
+  version "3.1.5"
+  resolved "https://registry.yarnpkg.com/promise-mysql/-/promise-mysql-3.1.5.tgz#d68de1c75ed4ca416817dcc5dde498be28ee6179"
+  dependencies:
+    "@types/mysql" "^2.15.0"
+    bluebird "^3.5.0"
+    mysql "^2.14.1"
 
 proxy-addr@~2.0.2:
   version "2.0.2"
