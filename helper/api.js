@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import FormData from 'form-data';
 import xmlPromiseParser from '../helper/xmlPromiseParser';
 
-const SERVER_URL = 'http://tgiftishowgw.giftishow.co.kr/media/';
+const SERVER_URL = process.env.TEST_SERVER_URL;
 
 const callAPI = (endPoint, body) => new Promise((resolve, reject) => {
   if (!endPoint) {
@@ -33,7 +33,7 @@ const callAPI = (endPoint, body) => new Promise((resolve, reject) => {
       const { response } = result;
       resolve(response);
     })
-    .catch(err => console.log(err));
+    .catch(err => reject(err));
 });
 
 //   {

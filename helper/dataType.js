@@ -1,4 +1,4 @@
-const MDCODE = 'M000201916';
+const MDCODE = process.env.MD_CODE;
 const tr_id = 'STD_';
 
 const salelist2 = {

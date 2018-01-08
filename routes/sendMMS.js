@@ -20,11 +20,18 @@ router.get('/', async (req, res) => {
     const title = 'what';
     const callback = '12341234';
     const goods_id = 'G00000018382';
-    const rsp = await api.callAPI('reqeust.asp', dataType.request(message, title, callback, goods_id, ctn));
-    console.log(rsp);
+    let rsp = null;
+    try {
+      rsp = await api.callAPI('reqeust.asp', dataType.request(message, title, callback, goods_id, ctn));
+    } catch (err) {
+      return res.status(500).send('somethin broke!');
+    }
+    console.log('rsp', rsp);
   } else {
     throw console.log('phone number is wrong err code : ', code);
   }
+
+  
 });
 
 export default router;
