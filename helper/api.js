@@ -2,7 +2,7 @@ import fetch from 'node-fetch';
 import FormData from 'form-data';
 import xmlPromiseParser from '../helper/xmlPromiseParser';
 
-const SERVER_URL = process.env.TEST_SERVER_URL;
+const SERVER_URL = process.env.NODE_ENV === 'development' ? process.env.TEST_SERVER_URL : process.env.SERVER_URL;
 
 const callAPI = (endPoint, body) => new Promise((resolve, reject) => {
   if (!endPoint) {

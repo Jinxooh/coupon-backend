@@ -6,11 +6,11 @@ import dotenv from 'dotenv';
 import saleList from './routes/saleList';
 import sendMMS from './routes/sendMMS';
 
+dotenv.config();
 const app = express();
 // const job = schedule.scheduleJob('*/10 * * * * *', () => console.log('schedule on'));
 
-dotenv.config();
-
+console.log('NODE_ENV. ', process.env.NODE_ENV);
 app.set('port', process.env.PORT || 3000);
 
 app.use(bodyParser.json());
