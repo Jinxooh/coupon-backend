@@ -23,13 +23,13 @@ const connect = async (fn) => {
   return result;
 };
 
-const transaction = fn => async (...args) => {
+const transaction = async (fn) => {
   /* DB 커넥션을 한다. */
   const con = await pool.getConnection();
   /* 트렌젝션 시작 */
   await con.connection.beginTransaction();
   /* 비지니스 로직에 con을 넘겨준다. */
-  const result = await fn(con, ...args).catch(async (error) => {
+  const result = await fn(con).catch(async (error) => {
     /* rollback을 진행한다. */
     await con.rollback();
     /* 에러시 con을 닫아준다. */

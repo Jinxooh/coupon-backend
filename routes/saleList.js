@@ -17,12 +17,12 @@ const asyncForEach = async (array, callback) => {
 router.get('/', async (req, res, next) => {
   console.log('saleList');
   const endPoint = 'salelist2.asp';
-  const response = await api.callAPI(endPoint, dataType.salelist2);
+  const response = await api.callAPI(endPoint, dataType.salelist2).catch(next);
 
   const { result, value } = response;
   let { code, goodsnum } = result;
 
-  console.log(goodsnum);
+  console.log('goodsnum : ', goodsnum);
   code = parseInt(code, 10);
   goodsnum = parseInt(code, 10);
 
@@ -56,7 +56,7 @@ router.get('/', async (req, res, next) => {
       end_date,
     } = goods;
 
-    await mysql.connect(async (con) => {
+    await mysql.transaction(async (con) => {
       const selectResult = await con.query(`SELECT goodsno FROM gd_goods WHERE goodscd='${goods_id}'`);
       if (isEmpty(selectResult)) {
         const insertResult = await con.query(`INSERT INTO gd_goods SET 
@@ -101,7 +101,7 @@ router.get('/', async (req, res, next) => {
       }
     }).catch(next);
   });
-  return res.status(200).json({ message: 'sending great' });
+  return res.status(200).json({ success: 'sending great' });
 });
 
 export default router;

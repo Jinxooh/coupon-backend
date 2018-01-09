@@ -27,7 +27,7 @@ const request = (MSG, TITLE, CALLBACK, goods_id, phone_no) => {
     // sms_flag,
     // template_id,
     // banner_id,
-    // user_id,
+    // user_id, // gd_member m_id
     // pay_id,
     // auto_refund_flag,
     // voucher_flag,

@@ -5,30 +5,28 @@ import dataType from '../helper/dataType';
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  console.log('auth, ', req.query);
+router.post('/', async (req, res, next) => {
+  console.log('auth, ', req.body);
+  const {
+    goods_id,
+    ctn,
+    message,
+    title,
+    callback,
+  } = req.body;
   // const { sender } = req.query;
   // console.log(sender);
-  const ctn = '01022267466'; // temp
-  const response = await api.callAPI('Auth.asp', dataType.Auth(ctn));
+  const response = await api.callAPI('Auth.asp', dataType.Auth(ctn)).catch(next);
   const { result } = response;
   const { code } = result;
 
   if (code === '0') { // success
     console.log('success');
-    const message = 'hello';
-    const title = 'what';
-    const callback = '12341234';
-    const goods_id = 'G00000018382';
-    let rsp = null;
-    try {
-      rsp = await api.callAPI('reqeust.asp', dataType.request(message, title, callback, goods_id, ctn));
-    } catch (err) {
-      return res.status(500).send({ message: 'something broke' });
-    }
+    const rsp = await api.callAPI('reqeust.asp', dataType.request(message, title, callback, goods_id, ctn))
+      .catch(next);
     console.log('rsp', rsp);
   } else {
-    throw console.log('phone number is wrong err code : ', code);
+    return next();
   }
 });
 

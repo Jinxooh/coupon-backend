@@ -22,12 +22,11 @@ const callAPI = (endPoint, body) => new Promise((resolve, reject) => {
   })
     .then((rsp) => {
       if (rsp.status !== 200) {
-        console.error('something broken... status => ', rsp.status);
+        reject(rsp.status);
       }
       return rsp.text();
     })
     .then(xml => xmlPromiseParser(xml))
-    .catch(err => Promise.reject(new Error(err)))
     .then((result) => {
       console.log('ressult: ', result);
       const { response } = result;
@@ -35,28 +34,6 @@ const callAPI = (endPoint, body) => new Promise((resolve, reject) => {
     })
     .catch(err => reject(err));
 });
-
-//   {
-//   if (!endPoint) {
-//     console.error('callAPI requires you specify an endpoint.');
-//     return;
-//   }
-
-//   const form = new FormData();
-//   const keys = Object.keys(body);
-//   keys.forEach((key) => {
-//     form.append(key, body[key]);
-//   });
-
-//   const rsp = await fetch(`${SERVER_URL}${endPoint}`, {
-//     method: 'POST',
-//     body: form,
-//   });
-//   const xml = await rsp.text();
-//   const { response } = await xmlPromiseParser(xml);
-//   return response;
-// };
-
 
 export default {
   callAPI,
