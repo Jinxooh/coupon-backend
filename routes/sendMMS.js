@@ -12,22 +12,26 @@ router.post('/', async (req, res, next) => {
     ctn,
     message,
     title,
-    callback,
+    tr_order_id,
   } = req.body;
   // const { sender } = req.query;
   // console.log(sender);
   const response = await api.callAPI('Auth.asp', dataType.Auth(ctn)).catch(next);
-  const { result } = response;
-  const { code } = result;
+  const { code } = response.result;
 
   if (code === '0') { // success
     console.log('success');
-    const rsp = await api.callAPI('reqeust.asp', dataType.request(message, title, callback, goods_id, ctn))
+    const rsp = await api.callAPI('request.asp', dataType.request(message, title, goods_id, ctn, tr_order_id))
       .catch(next);
     console.log('rsp', rsp);
-  } else {
-    return next();
+    const { code, value } = rsp.result;
+    console.log('code', code);
+    if (code === '1000') {
+      return res.status(200).json({ success: value });
+    }
+    return res.status(200).json({ success: 'something just like this' });
   }
+  return next();
 });
 
 export default router;

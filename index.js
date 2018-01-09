@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 // routes
 import saleList from './routes/saleList';
 import sendMMS from './routes/sendMMS';
+import Resend from './routes/Resend';
 
 dotenv.config();
 const app = express();
@@ -20,6 +21,7 @@ app.use(bodyParser.urlencoded({
 
 app.use('/saleList', saleList);
 app.use('/sendMMS', sendMMS);
+app.use('/Resend', Resend);
 app.use((err, req, res, next) => {
   // if (process.env.NODE_ENV === 'development') console.error(err.stack);
   res.status(500).json({ failure: err });

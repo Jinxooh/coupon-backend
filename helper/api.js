@@ -28,7 +28,7 @@ const callAPI = (endPoint, body) => new Promise((resolve, reject) => {
     })
     .then(xml => xmlPromiseParser(xml))
     .then((result) => {
-      console.log('ressult: ', result);
+      if (result === null) reject();
       const { response } = result;
       resolve(response);
     })

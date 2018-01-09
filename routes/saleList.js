@@ -26,10 +26,8 @@ router.get('/', async (req, res, next) => {
   code = parseInt(code, 10);
   goodsnum = parseInt(code, 10);
 
-  if (code !== 0) {
-    console.log(code);
-    return res.status(400);
-  }
+  if (code !== 0) return next(code);
+
   const { goodslist } = value;
   await asyncForEach(goodslist, async (goods) => {
     const { 
@@ -105,7 +103,7 @@ router.get('/', async (req, res, next) => {
       }
     }).catch(next);
   });
-  return res.status(200).json({ success: 'sending great' });
+  return res.status(200).json({ success: 'sending ok' });
 });
 
 export default router;

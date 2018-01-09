@@ -1,5 +1,6 @@
 const MDCODE = process.env.MD_CODE;
-const tr_id = 'STD_COUPON_';
+const tr_id_prefix = 'STD_COUPON_';
+const CALLBACK = '01022267466'; // 대표번호
 
 const salelist2 = {
   MDCODE,
@@ -12,7 +13,8 @@ const Auth = (ctn) => {
   };
 };
 
-const request = (MSG, TITLE, CALLBACK, goods_id, phone_no) => {
+const request = (MSG, TITLE, goods_id, phone_no, tr_order_id) => {
+  const tr_id = tr_id_prefix + tr_order_id;
   return {
     // Mandatory
     MDCODE,
@@ -35,7 +37,8 @@ const request = (MSG, TITLE, CALLBACK, goods_id, phone_no) => {
   };
 };
 
-const Resend = (sms_flag) => {
+const Resend = (sms_flag, tr_order_id) => {
+  const tr_id = tr_id_prefix + tr_order_id;
   return {
     MDCODE,
     tr_id,
@@ -43,14 +46,20 @@ const Resend = (sms_flag) => {
   };
 };
 
-const couponStatus = {
-  MDCODE,
-  tr_id,
+const couponStatus = (tr_order_id) => {
+  const tr_id = tr_id_prefix + tr_order_id;
+  return {
+    MDCODE,
+    tr_id,
+  };
 };
 
-const couponCancel = {
-  MDCODE,
-  tr_id,
+const couponCancel = (tr_order_id) => {
+  const tr_id = tr_id_prefix + tr_order_id;
+  return {
+    MDCODE,
+    tr_id,
+  };
 };
 
 const checkGood = (goods_id) => {
@@ -100,4 +109,4 @@ export default {
   checkGood, // 상품 상태조회
   regPayInfo, // 결제 정보 전달 API
   regPayCancelInfo, // 결제 취소 정보 전달 API
-};    
+};
