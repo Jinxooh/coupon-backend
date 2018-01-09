@@ -6,16 +6,16 @@ import dataType from '../helper/dataType';
 const router = express.Router();
 
 router.post('/', async (req, res, next) => {
-  console.log('resend, ', req.body);
+  console.log('couponCancel, ', req.body);
   const {
     tr_order_id,
   } = req.body;
 
-  const response = await api.callAPI('Resend.asp', dataType.resend('Y', tr_order_id))
+  const response = await api.callAPI('coupon_cancel.asp', dataType.couponCancel(tr_order_id))
     .catch(next);
-  const { code } = response.result;
-  console.log('code', code);
-  if (code === '0') {
+  const { StatusCode } = response.result;
+  console.log('StatusCode', StatusCode);
+  if (StatusCode === '0') {
     return res.status(200).json({ success: response });
   }
   return res.status(400).json({ failure: response });

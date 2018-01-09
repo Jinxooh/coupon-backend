@@ -37,7 +37,7 @@ const request = (MSG, TITLE, goods_id, phone_no, tr_order_id) => {
   };
 };
 
-const Resend = (sms_flag, tr_order_id) => {
+const resend = (sms_flag, tr_order_id) => {
   const tr_id = tr_id_prefix + tr_order_id;
   return {
     MDCODE,
@@ -103,7 +103,7 @@ export default {
   salelist2, // 목록 받기
   Auth, // phone 인증
   request, // MMS 전송
-  Resend, // MMS 재전송
+  resend, // MMS 재전송
   couponStatus, // 상품권 상태확인
   couponCancel, // 상품권 취소
   checkGood, // 상품 상태조회

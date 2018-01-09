@@ -3,9 +3,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 
 // routes
-import saleList from './routes/saleList';
-import sendMMS from './routes/sendMMS';
-import Resend from './routes/Resend';
+import routes from './routes';
 
 dotenv.config();
 const app = express();
@@ -19,9 +17,8 @@ app.use(bodyParser.urlencoded({
   extended: true,
 }));
 
-app.use('/saleList', saleList);
-app.use('/sendMMS', sendMMS);
-app.use('/Resend', Resend);
+app.use('/', routes);
+
 app.use((err, req, res, next) => {
   // if (process.env.NODE_ENV === 'development') console.error(err.stack);
   res.status(500).json({ failure: err });

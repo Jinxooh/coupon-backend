@@ -6,12 +6,12 @@ import dataType from '../helper/dataType';
 const router = express.Router();
 
 router.post('/', async (req, res, next) => {
-  console.log('resend, ', req.body);
+  console.log('checkGood, ', req.body);
   const {
-    tr_order_id,
+    goods_id,
   } = req.body;
 
-  const response = await api.callAPI('Resend.asp', dataType.resend('Y', tr_order_id))
+  const response = await api.callAPI('check_good.asp', dataType.checkGood(goods_id))
     .catch(next);
   const { code } = response.result;
   console.log('code', code);
