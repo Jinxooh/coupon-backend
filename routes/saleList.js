@@ -69,7 +69,6 @@ router.get('/', async (req, res, next) => {
             maker='${goods_com_name}',
             open=1`);
           if (!isEmpty(insertResult)) {
-            console.log(insertResult.insertId);
             setCategory(goods_com_name, con, insertResult.insertId, true);
 
             con.query(`INSERT INTO gd_goods_option SET 
@@ -103,7 +102,7 @@ router.get('/', async (req, res, next) => {
       }
     }).catch(next);
   });
-  return res.status(200).json({ success: 'sending ok' });
+  return res.status(200).json({ success: 'good' });
 });
 
 export default router;

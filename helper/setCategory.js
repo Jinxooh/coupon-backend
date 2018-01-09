@@ -12,18 +12,26 @@ const setCategory = async (categoryName, con, goodsno, insert = false) => {
   } else {
     sortedCategory = sortCategory(category);
   }
-  sortedCategory.forEach(async (value) => {
-    if (insert) {
+  if (insert) {
+    sortedCategory.forEach(async (value) => {
       await con.query(`INSERT INTO gd_goods_link SET 
       goodsno='${goodsno}',
       category='${value}',
       sort=-unix_timestamp()-${goodsno}`);
-    } else {
-      await con.query(`UPDATE gd_goods_link SET 
-      category='${value}'
-      WHERE goodsno='${goodsno}'`);
-    }
-  });
+    });
+  } else {
+    // category 길이를 측정후 길이가 같은 category 만 추출하여 update
+    const checkLength = await con.query(`SELECT sno, category FROM gd_goods_link WHERE goodsno='${goodsno}'`);
+    checkLength.forEach((value) => {
+      sortedCategory.forEach((sortValue) => {
+        if (value.category.length === sortValue.length) {
+          con.query(`UPDATE gd_goods_link SET 
+            category='${sortValue}'
+            WHERE sno='${value.sno}'`);
+        }
+      });
+    });
+  }
 };
 
 export default setCategory;

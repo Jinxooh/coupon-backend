@@ -16,7 +16,7 @@ router.post('/', async (req, res, next) => {
   } = req.body;
   // const { sender } = req.query;
   // console.log(sender);
-  const response = await api.callAPI('Auth.asp', dataType.Auth(ctn)).catch(next);
+  const response = await api.callAPI('Autsh.asp', dataType.Auth(ctn)).catch(next);
   const { code } = response.result;
 
   if (code === '0') { // success
@@ -29,7 +29,7 @@ router.post('/', async (req, res, next) => {
     if (code === '1000') {
       return res.status(200).json({ success: value });
     }
-    return res.status(200).json({ success: 'something just like this' });
+    return res.status(400).json({ failure: 'wrong' });
   }
   return next();
 });
