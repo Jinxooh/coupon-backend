@@ -21,9 +21,8 @@ app.use(bodyParser.urlencoded({
 app.use('/saleList', saleList);
 app.use('/sendMMS', sendMMS);
 app.use((err, req, res, next) => {
-  console.log('error, ', err);
   // if (process.env.NODE_ENV === 'development') console.error(err.stack);
-  res.status(500).json({ failure: 'FAILURE' });
+  res.status(500).json({ failure: err });
 });
 
 

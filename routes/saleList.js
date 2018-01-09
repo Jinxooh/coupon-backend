@@ -57,47 +57,51 @@ router.get('/', async (req, res, next) => {
     } = goods;
 
     await mysql.transaction(async (con) => {
-      const selectResult = await con.query(`SELECT goodsno FROM gd_goods WHERE goodscd='${goods_id}'`);
-      if (isEmpty(selectResult)) {
-        const insertResult = await con.query(`INSERT INTO gd_goods SET 
-          goodsnm='${goods_nm}', 
-          img_i='${goods_img}', 
-          img_s='${goods_img}', 
-          img_m='${goods_img}', 
-          img_l='${goods_img}', 
-          goodscd='${goods_id}',
-          goods_price='${real_price}', 
-          maker='${goods_com_name}',
-          open=1`);
-        if (!isEmpty(insertResult)) {
-          console.log(insertResult.insertId);
-          setCategory(goods_com_name, con, insertResult.insertId, true);
+      try {
+        const selectResult = await con.query(`SELECT goodsno FROM gd_goods WHERE goodscd='${goods_id}'`);
+        if (isEmpty(selectResult)) {
+          const insertResult = await con.query(`INSERT INTO gd_goods SET 
+            goodsnm='${goods_nm}', 
+            img_i='${goods_img}', 
+            img_s='${goods_img}', 
+            img_m='${goods_img}', 
+            img_l='${goods_img}', 
+            goodscd='${goods_id}',
+            goods_price='${real_price}', 
+            maker='${goods_com_name}',
+            open=1`);
+          if (!isEmpty(insertResult)) {
+            console.log(insertResult.insertId);
+            setCategory(goods_com_name, con, insertResult.insertId, true);
 
-          con.query(`INSERT INTO gd_goods_option SET 
-            goodsno='${insertResult.insertId}',
-            price='${real_price}',
-            link='1',
-            optno='1'`);
+            con.query(`INSERT INTO gd_goods_option SET 
+              goodsno='${insertResult.insertId}',
+              price='${real_price}',
+              link='1',
+              optno='1'`);
+          }
+        } else {
+          const updateResult = await con.query(`UPDATE gd_goods SET 
+            goodsnm='${goods_nm}', 
+            img_i='${goods_img}', 
+            img_s='${goods_img}', 
+            img_m='${goods_img}', 
+            img_l='${goods_img}', 
+            goods_price='${real_price}', 
+            maker='${goods_com_name}'
+            WHERE goodscd='${goods_id}'`);
+
+          if (!isEmpty(updateResult)) {
+            const { goodsno } = selectResult[0];
+            setCategory(goods_com_name, con, goodsno);
+
+            con.query(`UPDATE gd_goods_option SET 
+            price='${real_price}'
+            WHERE goodsno='${goodsno}'`);
+          }
         }
-      } else {
-        const updateResult = await con.query(`UPDATE gd_goods SET 
-          goodsnm='${goods_nm}', 
-          img_i='${goods_img}', 
-          img_s='${goods_img}', 
-          img_m='${goods_img}', 
-          img_l='${goods_img}', 
-          goods_price='${real_price}', 
-          maker='${goods_com_name}'
-          WHERE goodscd='${goods_id}'`);
-
-        if (!isEmpty(updateResult)) {
-          const { goodsno } = selectResult[0];
-          setCategory(goods_com_name, con, goodsno);
-
-          con.query(`UPDATE gd_goods_option SET 
-          price='${real_price}'
-          WHERE goodsno='${goodsno}'`);
-        }
+      } catch (error) {
+        next(error);
       }
     }).catch(next);
   });
