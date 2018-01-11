@@ -2,16 +2,43 @@ import isEmpty from 'lodash/isEmpty';
 
 // "001002003" => ['001','002','003']
 const sortCategory = category => [category.slice(0, 3), category.slice(0, 6), category];
+const renameCategory = (categoryName) => {
+  let rename;
+  switch (categoryName) {
+    case '예스이십사':
+      rename = '예스24';
+      break;
+    case '아이템베이':
+      rename = 'IB기프트';
+      break;
+    case '아이벨류':
+      rename = 'ivalue';
+      break;
+    case '달하루':
+      rename = '달하루한복';
+      break;
+    default:
+      rename = categoryName;
+      break;
+  }
+  return rename;
+};
 
 const setCategory = async (categoryName, con, goodsno, insert = false) => {
-  const unSortedCategory = await con.query(`SELECT category FROM gd_category WHERE catnm='${categoryName}'`);
-  const { category } = unSortedCategory[0];
+  const renamedCategory = renameCategory(categoryName);
   let sortedCategory = null;
-  if (isEmpty(unSortedCategory)) {
-    sortedCategory = ['009']; // 기타 카테고리
-  } else {
-    sortedCategory = sortCategory(category);
+  const unSortedCategory = await con.query('SELECT catnm, category FROM gd_category');
+
+  unSortedCategory.forEach((value) => {
+    if (renamedCategory.toUpperCase().indexOf(value.catnm.toUpperCase()) !== -1) {
+      sortedCategory = sortCategory(value.category);
+    }
+  });
+
+  if (isEmpty(sortedCategory)) {  // 분류가 안되는 품목
+    sortedCategory = sortCategory('009009009'); // 기타 카테고리
   }
+
   if (insert) {
     sortedCategory.forEach(async (value) => {
       await con.query(`INSERT INTO gd_goods_link SET 

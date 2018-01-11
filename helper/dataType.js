@@ -1,4 +1,4 @@
-const MDCODE = process.env.MD_CODE;
+const MDCODE = process.env.NODE_ENV === 'development' ? process.env.TEST_MD_CODE : process.env.MD_CODE;
 const tr_id_prefix = 'STD_COUPON_';
 const CALLBACK = '01022267466'; // 대표번호
 

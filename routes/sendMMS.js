@@ -1,4 +1,5 @@
 import express from 'express';
+import urlencode from 'urlencode';
 // db config
 import api from '../helper/api';
 import dataType from '../helper/dataType';
@@ -14,14 +15,15 @@ router.post('/', async (req, res, next) => {
     title,
     tr_order_id,
   } = req.body;
-  // const { sender } = req.query;
-  // console.log(sender);
-  const response = await api.callAPI('Autsh.asp', dataType.Auth(ctn)).catch(next);
+
+  const response = await api.callAPI('Auth.asp', dataType.Auth(ctn)).catch(next);
   const { code } = response.result;
 
   if (code === '0') { // success
     console.log('success');
-    const rsp = await api.callAPI('request.asp', dataType.request(message, title, goods_id, ctn, tr_order_id))
+    const convertedMessage = urlencode(message, 'euc-kr');
+    const convertedTitle = urlencode(title, 'euc-kr');
+    const rsp = await api.callAPI('request.asp', dataType.request(convertedMessage, convertedTitle, goods_id, ctn, tr_order_id))
       .catch(next);
     console.log('rsp', rsp);
     const { code, value } = rsp.result;
