@@ -10,8 +10,6 @@ import routes from './routes';
 dotenv.config();
 const app = express();
 
-
-
 console.log('NODE_ENV. ', process.env.NODE_ENV);
 app.set('port', process.env.PORT || 3000);
 

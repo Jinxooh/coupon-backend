@@ -6,7 +6,7 @@ import resend from './resend';
 import couponCancel from './couponCancel';
 import couponStatus from './couponStatus';
 import checkGood from './checkGood';
-
+import test from './test';
 
 const router = express.Router();
 
@@ -16,5 +16,6 @@ router.use('/resend', resend);
 router.use('/couponCancel', couponCancel);
 router.use('/couponStatus', couponStatus);
 router.use('/checkGood', checkGood);
+router.use('/test', test);
 
 export default router;
