@@ -2,12 +2,13 @@ import fetch from 'node-fetch';
 import querystring from 'querystring';
 import FormData from 'form-data';
 import xmlPromiseParser from '../helper/xmlPromiseParser';
+import logger from './logger';
 
 const SERVER_URL = process.env.NODE_ENV === 'development' ? process.env.TEST_SERVER_URL : process.env.SERVER_URL;
 
 const callAPI = (endPoint, body) => new Promise((resolve, reject) => {
   if (!endPoint) {
-    console.error('callAPI requires you specify an endpoint.');
+    logger.error('callAPI requires you specify an endpoint.');
     reject();
   }
 
@@ -16,7 +17,7 @@ const callAPI = (endPoint, body) => new Promise((resolve, reject) => {
   keys.forEach((key) => {
     form.append(key, body[key]);
   });
-  console.log(`${SERVER_URL}${endPoint}`);
+  logger.info(`${SERVER_URL}${endPoint}`);
   fetch(`${SERVER_URL}${endPoint}`, {
     method: 'POST',
     body: form,
@@ -38,12 +39,12 @@ const callAPI = (endPoint, body) => new Promise((resolve, reject) => {
 
 const callGetAPI = (endPoint, body) => new Promise((resolve, reject) => {
   if (!endPoint) {
-    console.error('callAPI requires you specify an endpoint.');
+    logger.error('callAPI requires you specify an endpoint.');
     reject();
   }
 
   const qs = querystring.stringify(body);
-  console.log(`${SERVER_URL}${endPoint}?${qs}`);
+  logger.info(`${SERVER_URL}${endPoint}?${qs}`);
   fetch(`${SERVER_URL}${endPoint}?${qs}`, {
     method: 'GET',
   })
