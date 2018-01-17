@@ -7,7 +7,7 @@ const logDir = 'log';
 const tsFormat = () => (new Date()).toLocaleString();
 
 if (!fs.existsSync(logDir)) fs.mkdirSync(logDir);
-export const logger = new (winston.Logger)({
+const logger = new (winston.Logger)({
   transports: [
     new (winston.transports.Console)({
       timestamp: tsFormat,
@@ -22,3 +22,5 @@ export const logger = new (winston.Logger)({
     }),
   ],
 });
+
+export default logger;
