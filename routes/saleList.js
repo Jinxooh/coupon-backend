@@ -6,6 +6,7 @@ import mysql from '../helper/dbConnect';
 import api from '../helper/api';
 import dataType from '../helper/dataType';
 import setCategory from '../helper/setCategory';
+import logger from '../helper/logger';
 
 const router = express.Router();
 
@@ -21,7 +22,7 @@ router.get('/', async (req, res, next) => {
   const { result, value } = response;
   let { code, goodsnum } = result;
 
-  console.log('goodsnum : ', goodsnum);
+  logger.info('goodsnum : ' + goodsnum);
   // return;
   code = parseInt(code, 10);
   goodsnum = parseInt(code, 10);
@@ -113,7 +114,7 @@ router.get('/', async (req, res, next) => {
       }
     }).catch(next);
   });
-  return res.status(200).json({ success: 'good' });
+  return res.status(200).json({ success: true });
 });
 
 export default router;
