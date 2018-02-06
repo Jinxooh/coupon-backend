@@ -57,6 +57,7 @@ router.get('/', async (req, res, next) => {
 
     let convertedDesc = desc.replace(/(\"|\')/g, '`'); // 데이터가 ", ' 가 같이 넘어와 DB INSERT 문제 발생하여 문자 변경
     convertedDesc = convertedDesc.replace(/(\n)/g, '<br />'); // 데이터가 줄바꿈이 \n 으로 넘어와 html에 적용안되는 문제 발생하여 문자 변경
+    const convertedImage = goods_img.replace(/(_250)/g, '');
 
     await mysql.transaction(async (con) => {
       try {
@@ -64,10 +65,10 @@ router.get('/', async (req, res, next) => {
         if (isEmpty(selectResult)) {
           const insertResult = await con.query(`INSERT INTO gd_goods SET 
           goodsnm='${goods_nm}', 
-          img_i='${goods_img}', 
-          img_s='${goods_img}', 
-          img_m='${goods_img}', 
-          img_l='${goods_img}', 
+          img_i='${convertedImage}', 
+          img_s='${convertedImage}', 
+          img_m='${convertedImage}', 
+          img_l='${convertedImage}', 
           goodscd='${goods_id}',
           goods_price='${real_price}', 
           maker='${goods_com_name}',
@@ -91,10 +92,10 @@ router.get('/', async (req, res, next) => {
           // needs getting datas compare with db.
           const updateResult = await con.query(`UPDATE gd_goods SET 
           goodsnm='${goods_nm}', 
-          img_i='${goods_img}', 
-          img_s='${goods_img}', 
-          img_m='${goods_img}', 
-          img_l='${goods_img}', 
+          img_i='${convertedImage}', 
+          img_s='${convertedImage}', 
+          img_m='${convertedImage}', 
+          img_l='${convertedImage}', 
           goods_price='${real_price}', 
           maker='${goods_com_name}'
           WHERE goodscd='${goods_id}'`);
@@ -114,7 +115,7 @@ router.get('/', async (req, res, next) => {
       }
     }).catch(next);
   });
-  return res.status(200).json({ success: true });
+  return res.status(200).json({ success: goodslist });
 });
 
 export default router;

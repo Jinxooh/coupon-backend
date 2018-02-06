@@ -15,10 +15,13 @@ router.post('/', async (req, res, next) => {
     .catch(next);
   const { StatusCode } = response.result;
   console.log('StatusCode', StatusCode);
+  console.log('response', response);
   if (StatusCode === '0') {
-    return res.status(200).json({ success: response });
+    return res.status(200).json({
+      code: StatusCode,
+    });
   }
-  return res.status(400).json({ failure: response });
+  return next(StatusCode);
 });
 
 export default router;

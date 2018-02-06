@@ -9,18 +9,18 @@ const start = () => {
   schedule.scheduleJob('0 0 7 * * 0-5', () => { // am 7 , mon-fri
     logger.info('scheduler on');
     fetch(`${BACKEND_SERVER}saleList`, { method: 'GET' })
-    .then((rsp) => rsp.text())
-    .then((result) => {
-      const { success } = JSON.parse(result);
-      if (success) {
-        logger.info('salelist insert ok');
-      } else {
-        logger.error('ERROR: salelist');
-      }
-    })
-    .catch((error) => { logger.error(error); });
+      .then(rsp => rsp.text())
+      .then((result) => {
+        const { success } = JSON.parse(result);
+        if (success) {
+          logger.info('salelist insert ok');
+        } else {
+          logger.error('ERROR: salelist');
+        }
+      })
+      .catch((error) => { logger.error(error); });
   });
-}
+};
 
 export default {
   start,

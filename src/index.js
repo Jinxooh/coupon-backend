@@ -12,7 +12,7 @@ import scheduler from './helper/scheduler';
 dotenv.config();
 const app = express();
 
-logger.info('NODE_ENV, ' + process.env.NODE_ENV);
+logger.info(`NODE_ENV, ${process.env.NODE_ENV}`);
 app.set('port', process.env.PORT || 3000);
 
 app.use(bodyParser.json());
@@ -22,8 +22,11 @@ app.use(bodyParser.urlencoded({
 
 app.use('/', routes);
 app.use((err, req, res, next) => {
-  logger.error(err);
-  res.status(500).json({ failure: err });
+  logger.error(`Error-> ${err}`);
+  res.status(500).json({
+    code: err,
+    url: req.url,
+  });
 });
 
 scheduler.start();

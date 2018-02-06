@@ -1,6 +1,6 @@
 const MDCODE = process.env.NODE_ENV === 'development' ? process.env.TEST_MD_CODE : process.env.MD_CODE;
-const tr_id_prefix = 'STD_COUPON_';
-const CALLBACK = '01022267466'; // 대표번호
+const tr_id_prefix = 'STD_';
+const CALLBACK = '16701490'; // 대표번호
 
 const salelist2 = {
   MDCODE,
@@ -62,42 +62,57 @@ const couponCancel = (tr_order_id) => {
   };
 };
 
-const checkGood = (goods_id) => {
-  return {
-    MDCODE,
-    goods_id,
-  };
-};
+const checkGood = goods_id => ({
+  MDCODE,
+  goods_id,
+});
+const regPayInfo = (
+  pay_id,
+  total_amount,
+  ay_method,
+  pay_amount,
+  pg_auth_num,
+  pay_date,
+  pay_time,
+  pay_cancel_url,
+  merchant_id,
+) => ({
+  MDCODE,
+  pay_id,
+  total_amount,
+  pay_method,
+  pay_amount,
+  pg_auth_num,
+  pay_date,
+  pay_time,
+  pay_cancel_url,
+  merchant_id,
+});
 
-const regPayInfo = (pay_id, total_amount, pay_method, pay_amount, pg_auth_num, pay_date, pay_time, pay_cancel_url, merchant_id) => {
-  return {
-    MDCODE,
-    pay_id,
-    total_amount,
-    pay_method,
-    pay_amount,
-    pg_auth_num,
-    pay_date,
-    pay_time,
-    pay_cancel_url,
-    merchant_id,
-  };
-};
 
-const regPayCancelInfo = (pay_id, total_amount, pay_method, pay_amount, pg_cancel_num, cancel_date, cancel_time, cancel_user_id, cancel_comment, merchant_id) => {
-  return {
-    MDCODE,
-    pay_id,
-    total_amount,
-    pay_method,
-    pay_amount,
-    pg_cancel_num,
-    cancel_date,
-    cancel_time,
-    cancel_user_id,
-    cancel_comment,
-  };
-};
+const regPayCancelInfo = (
+  pay_id,
+  total_amount,
+  pay_method,
+  pay_amount,
+  pg_cancel_num,
+  cancel_date,
+  cancel_time,
+  cancel_user_id,
+  cancel_comment,
+  merchant_id,
+) => ({
+  MDCODE,
+  pay_id,
+  total_amount,
+  pay_method,
+  pay_amount,
+  pg_cancel_num,
+  cancel_date,
+  cancel_time,
+  cancel_user_id,
+  cancel_comment,
+});
 
 export default {
   salelist2, // 목록 받기
