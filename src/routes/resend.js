@@ -16,9 +16,9 @@ router.post('/', async (req, res, next) => {
   const { code } = response.result;
   console.log('code', code);
   if (code === '0') {
-    return res.status(200).json({ success: response });
+    return res.status(200).json({ code });
   }
-  return res.status(400).json({ failure: response });
+  return next(code);
 });
 
 export default router;

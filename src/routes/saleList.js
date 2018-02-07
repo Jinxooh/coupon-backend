@@ -115,7 +115,7 @@ router.get('/', async (req, res, next) => {
       }
     }).catch(next);
   });
-  return res.status(200).json({ success: goodslist });
+  return res.status(200).json({ success: true });
 });
 
 export default router;
