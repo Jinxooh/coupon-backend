@@ -22,7 +22,7 @@ router.get('/', async (req, res, next) => {
   const { result, value } = response;
   let { code, goodsnum } = result;
 
-  logger.info('goodsnum : ' + goodsnum);
+  logger.info(`goodsnum : ' ${goodsnum}`);
   // return;
   code = parseInt(code, 10);
   goodsnum = parseInt(code, 10);
@@ -31,7 +31,7 @@ router.get('/', async (req, res, next) => {
 
   const { goodslist } = value;
   await asyncForEach(goodslist, async (goods) => {
-    const { 
+    const {
       goods_id,
       goods_com_name,
       category1,
@@ -40,19 +40,19 @@ router.get('/', async (req, res, next) => {
       desc,
       goods_nm,
       goods_img,
-      goods_desc_img_web,
-      goods_desc_img_mobile,
-      goods_brand_image,
-      web_content,
-      mms_content,
-      search_text,
-      sale_price,
-      sale_vat,
       real_price,
-      real_vat,
       period_end,
-      limit_date,
-      end_date,
+      // goods_desc_img_web,
+      // goods_desc_img_mobile,
+      // goods_brand_image,
+      // web_content,
+      // mms_content,
+      // search_text,
+      // sale_price,
+      // sale_vat,
+      // real_vat,
+      // limit_date,
+      // end_date,
     } = goods;
 
     let convertedDesc = desc.replace(/(\"|\')/g, '`'); // 데이터가 ", ' 가 같이 넘어와 DB INSERT 문제 발생하여 문자 변경
