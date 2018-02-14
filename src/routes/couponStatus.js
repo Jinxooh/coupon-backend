@@ -2,11 +2,12 @@ import express from 'express';
 // db config
 import api from '../helper/api';
 import dataType from '../helper/dataType';
+import logger from '../helper/logger';
 
 const router = express.Router();
 
 router.post('/', async (req, res, next) => {
-  // console.log('couponStatus, ', req.body);
+  logger.info(`couponStatus : ' ${JSON.stringify(req.body)}`);
   const {
     tr_order_id,
   } = req.body;
@@ -14,7 +15,7 @@ router.post('/', async (req, res, next) => {
   const response = await api.callAPI('coupon_status.asp', dataType.couponStatus(tr_order_id))
     .catch(next);
   const { StatusCode: code } = response.result;
-  // console.log('StatusCode', code);
+  logger.info(`couponStatus result : ' ${JSON.stringify(response.result)}`);
   if (code === '0') {
     return res.status(200).json({ code });
   }

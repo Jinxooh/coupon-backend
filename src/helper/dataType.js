@@ -6,12 +6,11 @@ const salelist2 = {
   MDCODE,
 };
 
-const Auth = (ctn) => {
-  return {
-    MDCODE,
-    ctn,
-  };
-};
+const Auth = ctn => ({
+  MDCODE,
+  ctn,
+});
+
 
 const request = (MSG, TITLE, goods_id, phone_no, tr_order_id) => {
   const tr_id = tr_id_prefix + tr_order_id;
@@ -66,6 +65,7 @@ const checkGood = goods_id => ({
   MDCODE,
   goods_id,
 });
+
 const regPayInfo = (
   pay_id,
   total_amount,
@@ -80,7 +80,7 @@ const regPayInfo = (
   MDCODE,
   pay_id,
   total_amount,
-  pay_method,
+  // pay_method,
   pay_amount,
   pg_auth_num,
   pay_date,
@@ -100,7 +100,7 @@ const regPayCancelInfo = (
   cancel_time,
   cancel_user_id,
   cancel_comment,
-  merchant_id,
+  // merchant_id,
 ) => ({
   MDCODE,
   pay_id,

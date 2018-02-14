@@ -1,12 +1,14 @@
 import express from 'express';
 // db config
+import urlencode from 'urlencode';
 import api from '../helper/api';
 import dataType from '../helper/dataType';
+import logger from '../helper/logger';
 
 const router = express.Router();
 
 router.post('/', async (req, res, next) => {
-  console.log('checkGood, ', req.body);
+  logger.info(`checkGood : ' ${JSON.stringify(req.body)}`);
   const {
     goods_id,
   } = req.body;
@@ -14,17 +16,11 @@ router.post('/', async (req, res, next) => {
   const response = await api.callAPI('check_good.asp', dataType.checkGood(goods_id))
     .catch(next);
   const { code, reason } = response.result;
-  // console.log('code', code);
-  // if (code === '0') {
+  logger.info(`checkGood result : ' ${JSON.stringify(response.result)}`);
   return res.status(200).json({
     code,
-    // reason, // php 에서 한글을 json으로 파싱을 못함...
+    reason: urlencode(reason, 'utf-8'),
   });
-  // }
-  // return res.status(400).json({
-  //   code,
-  //   reason,
-  // });
 });
 
 export default router;
