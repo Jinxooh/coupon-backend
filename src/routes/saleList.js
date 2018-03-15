@@ -7,14 +7,10 @@ import api from '../helper/api';
 import dataType from '../helper/dataType';
 import setCategory from '../helper/setCategory';
 import logger from '../helper/logger';
+import asyncForEach from '../helper/asyncForEach';
+import hideItemArray from '../helper/hideItemArray';
 
 const router = express.Router();
-
-const asyncForEach = async (array, callback) => {
-  for (let index = 0; index < array.length; index++) {
-    await callback(array[index], index, array);
-  }
-};
 
 router.get('/', async (req, res, next) => {
   const endPoint = 'salelist2.asp';
@@ -30,6 +26,7 @@ router.get('/', async (req, res, next) => {
   if (code !== 0) return next(code);
 
   const { goodslist } = value;
+
   await asyncForEach(goodslist, async (goods) => {
     const {
       goods_id,
@@ -89,7 +86,6 @@ router.get('/', async (req, res, next) => {
               optno='1'`);
           }
         } else {
-          // needs getting datas compare with db.
           const updateResult = await con.query(`UPDATE gd_goods SET 
           goodsnm='${goods_nm}', 
           img_i='${convertedImage}', 
@@ -97,7 +93,8 @@ router.get('/', async (req, res, next) => {
           img_m='${convertedImage}', 
           img_l='${convertedImage}', 
           goods_price='${real_price}', 
-          maker='${goods_com_name}'
+          maker='${goods_com_name}',
+          open=1
           WHERE goodscd='${goods_id}'`);
 
           if (!isEmpty(updateResult)) {
@@ -115,6 +112,9 @@ router.get('/', async (req, res, next) => {
       }
     }).catch(next);
   });
+
+  await hideItemArray(goodslist, next);
+
   return res.status(200).json({ success: true });
 });
 
